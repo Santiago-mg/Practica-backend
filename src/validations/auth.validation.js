@@ -1,10 +1,2 @@
-const Joi = require('joi');
-
-const loginSchema = Joi.object({
-  email: Joi.string().email().required(),
-  password: Joi.string().required(),
-});
-
-module.exports = {
-  loginSchema,
-};
+// DEPRECATED: this file moved during the Clean Architecture refactor.
+// See README.md for the new location. Safe to delete.

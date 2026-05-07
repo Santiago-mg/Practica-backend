@@ -1,29 +1,37 @@
 const express = require('express');
 
-const authRoutes = require('./routes/auth.routes');
+const buildContainer = require('./container');
 const {
   errorMiddleware,
   notFoundMiddleware,
-} = require('./middlewares/error.middleware');
-const propertyRoutes = require('./routes/property.routes');
+} = require('./interfaces/http/middlewares/error.middleware');
 
-const app = express();
+/**
+ * Build the Express application.
+ *
+ * Calling buildContainer() resolves all dependencies in one shot.
+ * The app then only sees finished routers and middlewares.
+ */
+const buildApp = () => {
+  const container = buildContainer();
+  const app = express();
 
-// Allows Express to read JSON bodies from incoming requests.
-app.use(express.json());
+  app.use(express.json());
 
-// Temporary health route to verify that the API is running.
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Real Estate API is running',
+  // Health route to quickly verify the API is up.
+  app.get('/', (req, res) => {
+    res.json({ message: 'Real Estate API is running' });
   });
-});
 
-// API version 1 routes.
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/properties', propertyRoutes);
+  // API v1 routes
+  app.use('/api/v1/auth', container.authRouter);
+  app.use('/api/v1/properties', container.propertyRouter);
 
-app.use(notFoundMiddleware);
-app.use(errorMiddleware);
+  // 404 + central error handler
+  app.use(notFoundMiddleware);
+  app.use(errorMiddleware);
 
-module.exports = app;
+  return { app, container };
+};
+
+module.exports = buildApp;

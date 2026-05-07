@@ -1,11 +1,2 @@
-class AppError extends Error {
-  constructor(message, statusCode = 500, details = null) {
-    super(message);
-
-    this.statusCode = statusCode;
-    this.details = details;
-    this.isOperational = true;
-  }
-}
-
-module.exports = AppError;
+// DEPRECATED: this file moved during the Clean Architecture refactor.
+// See README.md for the new location. Safe to delete.
