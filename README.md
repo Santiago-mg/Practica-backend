@@ -175,11 +175,7 @@ Controller responde JSON al cliente
 | `src/utils/appError.js` | `src/interfaces/http/errors/AppError.js` | Solo se usa para mapear errores HTTP. |
 | `src/config/database.js` | `src/infrastructure/database/sequelize.js` + `src/config/env.js` | Variables y conexion separadas. |
 
-Las carpetas viejas quedan con stubs que dicen `DEPRECATED` para que las puedas borrar manualmente:
-
-```bash
-rm -rf src/controllers src/services src/models src/routes src/middlewares src/validations src/utils src/config/database.js
-```
+Los stubs viejos marcados como `DEPRECATED` ya fueron eliminados. La estructura activa vive en las capas `domain`, `application`, `infrastructure` e `interfaces/http`.
 
 ## Decisiones tecnicas (honestas)
 
